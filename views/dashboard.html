@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MultiDownloader</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/css/styles.css">
+  </head>
+  <body>
+
+    <div id="sideNavbar">
+      <ul id="slide-out" class="side-nav fixed sidebar-inverse" style="width:22%;transform:translateX(0%);background-color:#222;border-color:#080808">
+        <li style="text-align:center"><i class="material-icons md-24">file download</i>
+          <h4 style="color:white">MultiDownloader</h4>
+          <h4 style="color:white">Interface</h4>
+        </li>
+        <li><i style="color:white" class="material-icons md-light">file download</i></li>
+        <li><a style="font-size:24;color:white" href="#!" class="waves-effect sideButton clientDownload"><i style="color:white" class="material-icons md-light">phonelink_ring</i>Client Download</a></li>
+        <li><div class="divider"></div></li>
+        <li><a style="color:white" href="#!" class="waves-effect sideButton remoteUpload"><i style="color:white" class="material-icons md-light">play_for_work</i>Remote Download</a></li>
+        <li><div class="divider"></div></li>
+        <!-- <li><a class="subheader">Subheader</a></li> -->
+        <li><a style="color:white" href="#!" class="waves-effect sideButton files"><i style="color:white" class="material-icons md-light">view_headline</i>Files</a></li>
+        <li><div class="divider"></div></li>
+        <li><a style="color:white" href="#!" class="waves-effect sideButton downloading"><i style="color:white" class="material-icons md-light">cloud</i>Download Status</a></li>
+        <li><div class="divider"></div></li>
+        <li><a style="color:white" href="#!" class="waves-effect sideButton addTorrent"><i style="color:white" class="material-icons md-light">input</i>Add Torrent</a></li>
+        <li><div class="divider"></div></li>
+        <li><a style="color:white" href="#!" class="waves-effect sideButton torrList"><i style="color:white" class="material-icons md-light">toc</i>Torrent List</a></li>
+        <li><div class="divider"></div></li>
+        <li><a style="color:white" href="/auth/logout" class="waves-effect"><i style="color:white" class="material-icons md-light">power_settings_new</i>Logout</a></li>
+      </ul>
+    </div>
+
+
+    <!--REMOTE DOWNLOAD-->
+    <div class="wrapper tohide" id="remoteUpload">
+      <div class="row">
+        <form id="remUp" class="col s9">
+          <div class="row">
+            <div class="input-field col s12">
+              <input placeholder="Enter Link Here" id="rlink" type="text" class="validate">
+              <label for="rlink">Link</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input placeholder="Enter Filename Here" id="rname" type="text" class="validate">
+              <label for="rname">Name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+              <!-- <label for="password">Password</label> -->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!--CLIENT DOWNLOAD-->
+    <div class="wrapper tohide" id="clientDownload">
+      <div class="row">
+        <form class="col s9" id="clientAdd">
+          <div class="row">
+            <div class="input-field col s12">
+              <input placeholder="Enter Link Here" id="clink" type="text" class="validate">
+              <label for="clink">Link</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input placeholder="Enter number of Parts Here" id="cnumparts" type="text" class="validate">
+              <label for="cnumparts">Number of Parts</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input placeholder="Enter Filename Here" id="cname" type="text" class="validate">
+              <label for="cname">Filename</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+              <!-- <label for="password">Password</label> -->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!--Download Status-->
+    <div class="wrapper tohide" id="downloading">
+      <ul class="collapsible" data-collapsible="accordion" style="width:80%" id="statusList">
+        <!-- <li>
+          <div class="collapsible-header active"><i class="material-icons">filter_drama</i>Ubuntu 17.04</div>
+          <div class="collapsible-body">
+            <div class="progress">
+              <div class="determinate" style="width: 70%"></div>
+            </div>
+            <h6 style="position:relative;left:42%;top:10px">12.1/18.6MB</h6>
+          </div>
+        </li> -->
+      </ul>
+    </div>
+
+    <!--Files-->
+    <div class="wrapper tohide" id="files">
+      <div class="collection" id="filesCollection">
+        <!-- <p href="#" class="collection-item" style="height:3.6em;line-height:2.5em;">Ubuntu 17.01
+          <button class="waves-effect btn tooltipped cButton" id="abcd" style="position:absolute;left:83%;z-index:4" data-position="top" data-delay="50" data-tooltip="Copy to clipboard" >Copy</button>
+          <button class="btn waves-effect tooltipped" style="background-color:#e57373;position:absolute;left:91%;z-index:4" data-position="top" data-delay="50" data-tooltip="Delete the file">Delete</button>
+        </p> -->
+      </div>
+    </div>
+
+
+
+    <!--Torrent Add-->
+    <div class="wrapper tohide" id="addTorrent">
+      <div class="row">
+        <form class="col s9" id="addTorr">
+          <div class="row">
+            <div class="input-field col s12">
+              <input placeholder="Enter Magnet Here" id="mlink" type="text" class="validate">
+              <label for="mlink">Magnet</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input placeholder="Enter Folder Here" id="mname" type="text" class="validate">
+              <label for="mname">Name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+              <!-- <label for="password">Password</label> -->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!--Torrent List-->
+    <div class="wrapper tohide" id="torrList">
+      <ul class="collapsible" data-collapsible="accordion" style="width:80%" id="torrentList">
+      </ul>
+    </div>
+
+    <style>
+    .wrapper {
+      width: 73%;
+      position: relative;
+      left:24%;
+      top:4em ;
+    }
+
+    .cButton, .dButton {
+      margin-bottom: 3px;
+      text-align: center;
+    }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script src="/js/dashboard.js"></script>
+  </body>
+</html>

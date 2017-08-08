@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>MultiDownloader</title>
+</head>
+<body>
+	<form id="basic">
+		<input type="text" name="link" id="link" placeholder="Enter Link Here">
+		<input type="text" name="parts" id="numParts" placeholder="Enter number of parts">
+		<input type="submit" name="submit">
+	</form>
+	<p id="status"></p>
+
+	<div>
+		<h3>Remote Upload</h3>
+		<form id="remUp">
+			<input type="text" name="username" id="username" placeholder="Enter Username">
+			<input type="password" name="pass" id="pass" placeholder="Enter Password">
+			<input type="text" name="remUpLink" id="remUpLink" placeholder="Enter Link">
+			<input type="text" name="fileName" id="fileName" placeholder="Enter FileName">
+			<input type="submit" name="submit">
+		</form>
+	</div>
+
+	<div>
+		<h3>Delete File</h3>
+		<form id="delFile">
+			<input type="text" name="username" id="usernameDel" placeholder="Enter Username">
+			<input type="password" name="pass" id="passDel" placeholder="Enter Password">
+			<input type="text" name="fileName" id="fileNameDel" placeholder="Enter FileName">
+			<input type="submit" name="submit">
+		</form>
+	</div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+	<script type="text/javascript">
+		socket  = io("http://67.207.80.54:3000");
+
+		socket.on("connect",function(data){
+			$("#status").text("Connected To Server");
+		});
+
+		socket.on('Exception',function(data){
+			$("#status").text(data.error);
+		});
+
+		socket.on("downloadOver",function(data){
+			$("#status").text("Download Complete");
+		});
+
+		socket.on("startedDownload",function(data){
+			$("#status").text("Download Started...");
+		});
+
+		socket.on('Status',function(data){
+			$("#status").text(data.message);
+		});
+
+		socket.on("disconnect",function(data){
+			$("#status").text("Disconnected from Server");
+		});
+
+		$("#basic").submit(function(){
+			var link = $("#link").val();
+			var numParts = parseInt($("#numParts").val());
+			socket.emit("startDownload",{
+				link:link,
+				numParts:numParts
+			});
+      return false;  
+		});
+
+
+		$("#remUp").submit(function(){
+			var username = $("#username").val();
+			var pass = $("#pass").val();
+			var remUpLink = $("#remUpLink").val();
+			var fileName = $("#fileName").val();
+			socket.emit("remoteUpload",{
+				username:username,
+				password:pass,
+				link:remUpLink,
+				fileName:fileName
+			});
+			return false;
+		});
+
+		$("#delFile").submit(function(){
+			var username = $("#usernameDel").val();
+			var pass = $("#passDel").val();
+			var fileName = $("#fileNameDel").val();
+			socket.emit("deleteFile",{
+				username:username,
+				password:pass,
+				link:remUpLink,
+				fileName:fileName
+			});
+			return false;
+		});
+
+
+	</script>
+</body>
+</html>
