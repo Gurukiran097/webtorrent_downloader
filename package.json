@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "prestart":"mkdir -p downloads;mkdir -p temp",
     "start": "node socket.js"
   },
   "dependencies": {
