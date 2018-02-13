@@ -33,7 +33,7 @@ router.get('/downloadedFile',(req,res)=>{
       var positions = range.replace(/bytes=/,'').split('-');
       var start = parseInt(positions[0], 10);
       var end = positions[1] ? parseInt(positions[1],10):total-1;
-      var chunksize = (end-start)+1;
+      var chunksize = (end-start)+1;	
       /*var length = results.resultsuri[1].split['.'].length;
       var type = results.resultsuri[1].split['.'][length-1];*/
       res.writeHead(206,{
@@ -41,6 +41,7 @@ router.get('/downloadedFile',(req,res)=>{
         "Accept-Ranges": "bytes",
 	"Content-Type": mime,
         "Content-Length": chunksize,
+	"Content-Disposition": "attachment; filename=\"" + fileName +"\"",
         // "Content-Type": result.contenttype
       });
       var stream = fs.createReadStream(link,{start:start,end:end})
